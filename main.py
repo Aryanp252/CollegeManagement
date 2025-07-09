@@ -1,5 +1,6 @@
 # main.py
 
+import sys
 from student import (
     add_student,
     view_students,
@@ -7,6 +8,22 @@ from student import (
     update_student,
     delete_student
 )
+
+def handle_choice(choice):
+    if choice == '1':
+        add_student()
+    elif choice == '2':
+        view_students()
+    elif choice == '3':
+        search_student()
+    elif choice == '4':
+        update_student()
+    elif choice == '5':
+        delete_student()
+    elif choice == '6':
+        print("Exiting program...")
+    else:
+        print("Invalid choice. Try again.\n")
 
 def menu():
     while True:
@@ -20,21 +37,16 @@ def menu():
 
         choice = input("Enter your choice (1-6): ")
 
-        if choice == '1':
-            add_student()
-        elif choice == '2':
-            view_students()
-        elif choice == '3':
-            search_student()
-        elif choice == '4':
-            update_student()
-        elif choice == '5':
-            delete_student()
-        elif choice == '6':
+        if choice == '6':
             print("Exiting program...")
             break
-        else:
-            print("Invalid choice. Try again.\n")
+
+        handle_choice(choice)
 
 if __name__ == "__main__":
-    menu()
+    if len(sys.argv) > 1:
+        # Use CLI argument for non-interactive mode (e.g. Jenkins)
+        handle_choice(sys.argv[1])
+    else:
+        # Fallback to interactive menu
+        menu()
